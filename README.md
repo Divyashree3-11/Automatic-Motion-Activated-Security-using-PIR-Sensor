@@ -12,6 +12,11 @@
 7.	USB Cable – 1 No (for uploading code and powering Arduino)
 8.	Computer with Tinkercad or Arduino IDE installed
 
+## TinkerCad Circuit:
+
+<img width="995" height="715" alt="image" src="https://github.com/user-attachments/assets/01f0811b-0326-4b23-8e03-5e6f0eb164eb" />
+
+
 ## Theory:
 
      Passive Infrared (PIR) sensors are electronic devices that detect motion by sensing infrared radiation emitted by objects. Every object with a temperature above absolute zero emits infrared radiation. The PIR sensor detects this radiation and can sense motion when a warm object, such as a human body, passes within its detection range. The sensor contains a pair of pyroelectric sensors housed under a Fresnel lens, which focuses the infrared signals onto the sensor surface. When the infrared levels change rapidly between the two pyroelectric sensors—such as when a person walks by—the sensor outputs a HIGH signal indicating motion detection.
@@ -60,13 +65,39 @@ Step 7: Save Your Work
 
 
 # Code:
+```
+int pirsensor = 0;
 
+void setup()
+{
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+  pinMode(7, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(10, OUTPUT);
+}
 
+void loop()
+{
+  pirsensor = analogRead(A0);
+  Serial.println(pirsensor);
+  if (pirsensor >= 100) {
+    digitalWrite(7, LOW);
+    digitalWrite(6, HIGH);
+    tone(10, 92, 100); // play tone 30 (F#2 = 92 Hz)
+  } else {
+    digitalWrite(7, HIGH);
+    digitalWrite(6, LOW);
+    digitalWrite(10, LOW);
+  }
+  delay(10); // Delay a little bit to improve simulation performance
+}
+```
 
 # Output:
 
-
-
+https://github.com/user-attachments/assets/56c0b6bc-6d41-4446-bbaa-003115d17cc4
 
 # Result:
 The PIR sensor successfully detected motion and triggered the Arduino to turn ON the built-in LED. The LED remained OFF when no motion was present, confirming correct circuit and code functionality.
